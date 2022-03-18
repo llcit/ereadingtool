@@ -100,7 +100,7 @@ class DashboardVerb:
         return {
             "id": "http://adlnet.gov/expapi/verbs/completed",
             "display": {
-                "en": "completed"
+                "en-US": "completed"
                 }
         }
 
@@ -120,7 +120,7 @@ class DashboardObject:
             "definition": {
                 "type": "http://adlnet.gov/expapi/activities/assessment",
                 "name": {
-                    "en": "Data transfer quiz"
+                    "en-US": "Data transfer quiz"
                 }
             },
             "objectType": "Activity"
