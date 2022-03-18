@@ -29,7 +29,7 @@ CHANNEL_LAYERS = {
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
-ADMINS = [('Andrew', 'als2@pdx.edu'), ('EReader', 'ereader@pdx.edu')]
+ADMINS = []
 
 # Prevents CommondMiddleware from `APPEND_SLASH` (defaulted to `True`)
 # adding a forward slash to all URLs sent to the backend (by way of 301)
@@ -109,7 +109,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 DEBUG = False
 DEV = False
 
-ALLOWED_HOSTS = ['0.0.0.0',
+ALLOWED_HOSTS = ['*', '0.0.0.0',
                  'localhost',
                  '142.93.20.73',
                  'stepstoadvancedreading.org',

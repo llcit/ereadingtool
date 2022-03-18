@@ -43,6 +43,7 @@
     "watcherGlob": "**"
   },
   "dependencies": {
-    "jwt-decode": "^3.1.2"
+    "jwt-decode": "^3.1.2",
+    "parcel-bundler": "^1.12.5"
   }
 }
