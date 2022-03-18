@@ -18,7 +18,7 @@ api_urlpatterns = [
      path('api/student/<int:pk>/consent_to_research', StudentAPIConsentToResearchView.as_view(),
           name='api-student-research-consent'),
      path('api/student/<int:pk>/connect_to_dashboard', StudentAPIConnectToDashboard.as_view(),
-         name='api-student-dashboard-connect')
+         name='api-student-dashboard-connect'),
      path('api/my_words', StudentAPIMyWordsView.as_view(), name='api-student-my-words')
 ]
 

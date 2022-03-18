@@ -12,33 +12,25 @@ def dashboard_synchronize_my_words(student, text_phrase, text_section, **kwargs)
     if not kwargs['connected_to_dashboard']:
         return
     else:
-        # What kind of data do we want to pass to the LRS here?
-
-        # Same stuff that is provided to the My Words...
-
-        # score = {
-        #     "raw":
-        #     "min": 0,
-        #     "max":
-        #     "scaled": 1
-        # }
         actor = DashboardActor(student.user.first_name + " " + student.user.last_name,
                     student.user.email,
                     "Agent"
         ).to_dict()
-        # result = DashboardResult(score, text_reading.state).to_dict()
+        
+        try: 
+            verb = DashboardVerb().to_dict()
+            text_url = DASHBOARD_STAR_ENDPOINT + "/text/" + str(text_reading.text.id)
+            object = DashboardObject(url=text_url).to_dict()
+            dashboard_data = DashboardData(actor, result, verb, object).to_dict()
 
-        # TODO
-        verb = DashboardVerb().to_dict()
-        text_url = DASHBOARD_STAR_ENDPOINT + "/text/" + str(text_reading.text.id)
-        object = DashboardObject(url=text_url).to_dict()
-        dashboard_data = DashboardData(actor, result, verb, object).to_dict()
-
-        endpoint =  + dashboard_data['id']
-        headers = {
-            'X-Experience-API-Version' : '1.0.3',
-            'Content-Type' : 'application/json',
-            'Authorization' : os.getenv("DASHBOARD_TOKEN")
-        }
-
-        requests.put(endpoint, headers=headers, data=json.dumps(dashboard_data))
+            endpoint = DASHBOARD_ENDPOINT+'/statements?statementId='+dashboard_data['id']
+            
+            headers = {
+                'X-Experience-API-Version' : '1.0.3',
+                'Content-Type' : 'application/json',
+                'Authorization' : os.getenv("DASHBOARD_TOKEN")
+            }
+            print(endpoint, json.dumps(headers, indent=2), json.dumps(dashboard_data, indent=2))
+            #requests.put(endpoint, headers=headers, data=json.dumps(dashboard_data))
+        except Exception as e:
+            print(e)
