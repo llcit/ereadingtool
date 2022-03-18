@@ -1,5 +1,5 @@
 from django.urls import path
-from user.views.student import (StudentSignUpView, StudentSignupAPIView, StudentProfileView, StudentAPIView,
+from user.views.student import (StudentAPIConnectToDashboard, StudentSignUpView, StudentSignupAPIView, StudentProfileView, StudentAPIView,
                                 StudentAPIMyWordsView, StudentAPIConsentToResearchView, StudentLoginView,
                                 StudentLoginAPIView, StudentLogoutAPIView, StudentFlashcardView,
                                 ElmLoadJsStudentProfileView, ElmLoadStudentSignUpView, ElmLoadJsStudentLoginView)
@@ -17,6 +17,8 @@ api_urlpatterns = [
      path('api/student/<int:pk>', StudentAPIView.as_view(), name='api-student'),
      path('api/student/<int:pk>/consent_to_research', StudentAPIConsentToResearchView.as_view(),
           name='api-student-research-consent'),
+     path('api/student/<int:pk>/connect_to_dashboard', StudentAPIConnectToDashboard.as_view(),
+         name='api-student-dashboard-connect')
      path('api/my_words', StudentAPIMyWordsView.as_view(), name='api-student-my-words')
 ]
 
