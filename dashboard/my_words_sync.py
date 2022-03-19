@@ -1,7 +1,7 @@
 import requests
 import json
 import os
-from ereadingtool.settings import DASHBOARD_STAR_ENDPOINT
+from ereadingtool.settings import DASHBOARD_STAR_ENDPOINT, DASHBOARD_ENDPOINT, DASHBOARD_LRS_ENDPOINT
 from .dashboard import DashboardActor, DashboardData, DashboardObject, DashboardResult, DashboardVerb
 from .dashboard import dashboard_connected
 
@@ -16,11 +16,13 @@ def dashboard_synchronize_my_words(student, text_phrase, text_section, **kwargs)
                     student.user.email,
                     "Agent"
         ).to_dict()
-        
+
+        result = text_phrase.to_dict()
+
         try: 
-            verb = DashboardVerb().to_dict()
-            text_url = DASHBOARD_STAR_ENDPOINT + "/text/" + str(text_reading.text.id)
-            object = DashboardObject(url=text_url).to_dict()
+            verb = DashboardVerb(verb_type='added', verb_name='Added word').to_dict()
+            text_url = DASHBOARD_STAR_ENDPOINT + "/text/" + str(text_section.text.id)
+            object = DashboardObject(activity_name='Vocab', url=text_url).to_dict()
             dashboard_data = DashboardData(actor, result, verb, object).to_dict()
 
             endpoint = DASHBOARD_ENDPOINT+'/statements?statementId='+dashboard_data['id']
@@ -30,7 +32,8 @@ def dashboard_synchronize_my_words(student, text_phrase, text_section, **kwargs)
                 'Content-Type' : 'application/json',
                 'Authorization' : os.getenv("DASHBOARD_TOKEN")
             }
+            
+            requests.put(endpoint, headers=headers, data=json.dumps(dashboard_data))
             print(endpoint, json.dumps(headers, indent=2), json.dumps(dashboard_data, indent=2))
-            #requests.put(endpoint, headers=headers, data=json.dumps(dashboard_data))
         except Exception as e:
             print(e)

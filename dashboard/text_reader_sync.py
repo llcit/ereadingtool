@@ -13,7 +13,6 @@ def dashboard_synchronize_text_reading(text_reading, **kwargs):
     if not kwargs['connected_to_dashboard']:
         return
     else:
-
         score = {
             "raw": text_reading.score['section_scores'],
             "min": 0,
@@ -23,18 +22,23 @@ def dashboard_synchronize_text_reading(text_reading, **kwargs):
 
         actor = DashboardActor(text_reading.student.user.first_name + " " + text_reading.student.user.last_name, text_reading.student.user.email,"Agent").to_dict()
         result = DashboardResultTextComplete(score, text_reading.state).to_dict()
-        verb = DashboardVerb().to_dict()
-        text_url = DASHBOARD_STAR_ENDPOINT + "/text/" + str(text_reading.text.id)
-        object = DashboardObject(url=text_url).to_dict()
-        dashboard_data = DashboardData(actor, result, verb, object).to_dict()
+        verb = DashboardVerb(verb_type='completed', verb_name='Completed').to_dict()
+        try:
+            text_url = DASHBOARD_STAR_ENDPOINT + "/text/" + str(text_reading.text.id)
+            object = DashboardObject(activity_type='assessment', activity_name='Quiz Completed', url=text_url).to_dict()
+            dashboard_data = DashboardData(actor, result, verb, object).to_dict()
 
-        endpoint = DASHBOARD_ENDPOINT+'/statements?statementId='+dashboard_data['id']
-        
-        
-        headers = {
-            'X-Experience-API-Version' : '1.0.3',
-            'Content-Type' : 'application/json',
-            'Authorization' : os.getenv("DASHBOARD_TOKEN")
-        }
-        print(endpoint, json.dumps(headers, indent=2), json.dumps(dashboard_data, indent=2))
-        #requests.put(endpoint, headers=headers, data=json.dumps(dashboard_data))
+            endpoint = DASHBOARD_ENDPOINT+'/statements?statementId='+dashboard_data['id']
+            
+            
+            headers = {
+                'X-Experience-API-Version' : '1.0.3',
+                'Content-Type' : 'application/json',
+                'Authorization' : os.getenv("DASHBOARD_TOKEN")
+            }
+            
+            requests.put(endpoint, headers=headers, data=json.dumps(dashboard_data))
+            print(endpoint, json.dumps(headers, indent=2), json.dumps(dashboard_data, indent=2))
+        except Exception as e:
+            print(e)
+            

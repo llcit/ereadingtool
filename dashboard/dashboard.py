@@ -96,20 +96,23 @@ class DashboardResultTextComplete:
 
 
 class DashboardVerb:
+    def __init__(self, verb_type='completed', verb_name='Completed'):
+        self.verb_type = verb_type
+        self.verb_name = verb_name
+
     def to_dict(self) -> Dict:
         return {
-            "id": "http://adlnet.gov/expapi/verbs/completed",
+            "id": "http://adlnet.gov/expapi/verbs/"+self.verb_type,
             "display": {
-                "en-US": "completed"
+                "en-US": self.verb_name
                 }
         }
 
 class DashboardObject:
-    def __init__(self, url=''):
-        try:
-            self.url = url
-        except:
-            self.url = ''
+    def __init__(self, activity_type='assessment', activity_name='Activity', url=''):
+        self.activity_type = activity_type
+        self.activity_name = activity_name
+        self.url = url
 
     def set_object_url(self, url):
         self.url = url
@@ -118,10 +121,12 @@ class DashboardObject:
         return {
             "id": self.url,
             "definition": {
-                "type": "http://adlnet.gov/expapi/activities/assessment",
+                "type": "http://adlnet.gov/expapi/activities/"+self.activity_type,
                 "name": {
-                    "en-US": "Data transfer quiz"
+                    "en-US": self.activity_name
                 }
             },
-            "objectType": "Activity"
+            "objectType": self.activity_type
         }
+
+# django.core.exceptions.ImproperlyConfigured: AUTH_USER_MODEL refers to model 'user.ReaderUser' that has not been installed
