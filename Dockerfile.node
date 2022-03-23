@@ -7,22 +7,22 @@ RUN apt update -y \
     && mkdir logs \
     && touch logs/access.log \
     && touch logs/error.log \
-    && git clone https://github.com/ereadingtool/ereadingtool.git \
+    && git clone https://github.com/llcit/ereadingtool.git \
     && curl -L -o elm.gz https://github.com/elm/compiler/releases/download/0.19.1/binary-for-linux-64-bit.gz \
     && gunzip elm.gz \
     && chmod +x elm \
     && mv elm /usr/local/bin \
     && cd ereadingtool \
-    && git checkout devel \
+    && git checkout dashboard-deploy-test \
     && cd web \
     && npm install -g parcel-bundler@1.12.4 \
     && npm install \
     && npm run build \
     && apt-get install -y nginx \
-    && mkdir -p /var/www/steps2ar.org/html \
-    && chown -R $USER:$USER /var/www/steps2ar.org/html \
+    && mkdir -p /var/www/localhost/html \
+    && chown -R $USER:$USER /var/www/localhost/html \
     && chmod -R 755 /var/www \
-    && cp -r dist/* /var/www/steps2ar.org/html/
+    && cp -r dist/* /var/www/localhost/html/
 
 COPY steps2ar.org /etc/nginx/sites-available/
 
@@ -30,7 +30,7 @@ COPY steps2ar.org /etc/nginx/sites-available/
 # nginx -s reload
 COPY nginx.conf /etc/nginx/
 
-RUN ln -s /etc/nginx/sites-available/steps2ar.org /etc/nginx/sites-enabled/ \
+RUN ln -s /etc/nginx/sites-available/localhost /etc/nginx/sites-enabled/ \
     && rm /etc/nginx/sites-enabled/default
 
 CMD ["nginx", "-g", "daemon off;"]
