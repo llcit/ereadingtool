@@ -109,7 +109,7 @@ class DashboardVerb:
         }
 
 class DashboardObject:
-    def __init__(self, activity_type='assessment', activity_name='Activity', url=''):
+    def __init__(self, activity_type='Activity', activity_name='Activity', url=''):
         self.activity_type = activity_type
         self.activity_name = activity_name
         self.url = url

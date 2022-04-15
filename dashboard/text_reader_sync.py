@@ -22,10 +22,10 @@ def dashboard_synchronize_text_reading(text_reading, **kwargs):
 
         actor = DashboardActor(text_reading.student.user.first_name + " " + text_reading.student.user.last_name, text_reading.student.user.email,"Agent").to_dict()
         result = DashboardResultTextComplete(score, text_reading.state).to_dict()
-        verb = DashboardVerb(verb_type='completed', verb_name='Completed').to_dict()
+        verb = DashboardVerb(verb_type='completed', verb_name='Completed Quiz').to_dict()
         try:
             text_url = DASHBOARD_STAR_ENDPOINT + "/text/" + str(text_reading.text.id)
-            object = DashboardObject(activity_type='assessment', activity_name='Quiz Completed', url=text_url).to_dict()
+            object = DashboardObject(activity_type='Activity', activity_name='Quiz', url=text_url).to_dict()
             dashboard_data = DashboardData(actor, result, verb, object).to_dict()
 
             endpoint = DASHBOARD_ENDPOINT+'/statements?statementId='+dashboard_data['id']

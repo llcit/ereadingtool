@@ -20,9 +20,9 @@ def dashboard_synchronize_my_words(student, text_phrase, text_section, **kwargs)
         result = text_phrase.to_dict()
 
         try: 
-            verb = DashboardVerb(verb_type='added', verb_name='Added word').to_dict()
+            verb = DashboardVerb(verb_type='completed', verb_name='Added word').to_dict()
             text_url = DASHBOARD_STAR_ENDPOINT + "/text/" + str(text_section.text.id)
-            object = DashboardObject(activity_name='Vocab', url=text_url).to_dict()
+            object = DashboardObject(activity_name='Quiz', url=text_url).to_dict()
             dashboard_data = DashboardData(actor, result, verb, object).to_dict()
 
             endpoint = DASHBOARD_ENDPOINT+'/statements?statementId='+dashboard_data['id']
