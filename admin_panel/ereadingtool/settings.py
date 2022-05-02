@@ -27,7 +27,7 @@ CHANNEL_LAYERS = {
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
-ADMINS = [('Andrew', 'als2@pdx.edu'), ('EReader', 'ereader@pdx.edu')]
+ADMINS = [('Richard', 'rmedina@hawaii.edu'),]
 
 YANDEX_TRANSLATION_API_KEY = os.getenv('YANDEX_TRANSLATION_API_KEY')
 YANDEX_DEFINITION_API_KEY = os.getenv('YANDEX_DEFINITION_API_KEY')
@@ -101,7 +101,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 DEBUG = False 
 DEV = True
 
-ALLOWED_HOSTS = ['0.0.0.0',
+ALLOWED_HOSTS = ['*','0.0.0.0',
                  'localhost',
                  '127.0.0.1',
                  '142.93.20.73',

@@ -5,11 +5,11 @@ server {
         access_log /app/logs/access.log;
         error_log /app/logs/error.log warn;
 
-        root /var/www/steps2ar.org/html;
+        root /var/www/onkoali.org/html;
 
         index index.html index.htm index.nginx-debian.html;
 
-        server_name steps2ar.org www.steps2ar.org;
+        server_name onkoali.org www.onkoali.org;
 
         location / {
                 try_files $uri /index.html;

@@ -34,8 +34,8 @@ init maybeConfig =
         -- Here the URL has been changed for local development
         Nothing ->
             Config
-                { restApiUrl = "https://api.stepstoadvancedreading.org"
-                , websocketBaseUrl = "wss://api.stepstoadvancedreading.org"
+                { restApiUrl = "https://api.onkoali.org"
+                , websocketBaseUrl = "wss://api.onkoali.org"
                 , showHelp = True
                 }
 
