@@ -55,6 +55,8 @@ class APIView(View):
         """
         errors = params = {}
 
+
+
         try:
             params = json.loads(request.body.decode('utf8'))
         except json.JSONDecodeError as e:
@@ -62,7 +64,7 @@ class APIView(View):
 
         try:
             form = self.form(request, params)
-
+            
             # `is_valid()` has the ability to determine if a user enters invalid creds
             if form.is_valid():
                 return self.post_success(request, form)
