@@ -20,10 +20,10 @@ from user.student.research_consent.models import StudentResearchConsent
 class Student(Profile, TextReadings, models.Model):
     user = models.OneToOneField(ReaderUser, on_delete=models.CASCADE)
     research_consent = models.OneToOneField(StudentResearchConsent, null=True, on_delete=models.SET_NULL)
-    dashboard_user = models.OneToOneField(StudentDashboardUser, null=True, on_delete=models.SET_NULL)
+    dashboard_user = models.OneToOneField(StudentDashboardUser, null=True, blank=True, on_delete=models.SET_NULL)
     difficulty_preference = models.ForeignKey(TextDifficulty, null=True, on_delete=models.SET_NULL,
                                               related_name='students')
-    dashboard_last_updated = models.DateTimeField(null=True)
+    dashboard_last_updated = models.DateTimeField(null=True, blank=True)
 
     login_url = reverse_lazy('student-login')
 
