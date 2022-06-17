@@ -76,8 +76,18 @@ class DashboardResult:
     NotImplemented
 
 
-class DashboardResultMyWords(DashboardResult):
-    NotImplemented
+class DashboardResultMyWords:
+    def __init__(self, word_data):
+        self.data = word_data
+
+    def to_dict(self):
+        return {
+            'extensions': {
+                "https://languageflagshipdashboard.com/vocab-targetlang": self.data['phrase'],
+                "https://languageflagshipdashboard.com/vocab-translation": self.data['translation'],
+                "https://languageflagshipdashboard.com/vocab-grammemes": self.data['grammemes']
+            }
+        }        
 
 class DashboardResultTextComplete:
     def __init__(self, score, state):
@@ -96,21 +106,21 @@ class DashboardResultTextComplete:
 
 
 class DashboardVerb:
-    def __init__(self, verb_type='completed', verb_name='Completed'):
-        self.verb_type = verb_type
+    def __init__(self, verb_type_id='', verb_name=''):
+        self.verb_type_id = verb_type_id
         self.verb_name = verb_name
 
     def to_dict(self) -> Dict:
         return {
-            "id": "http://adlnet.gov/expapi/verbs/"+self.verb_type,
+            "id": self.verb_type_id,
             "display": {
                 "en-US": self.verb_name
                 }
         }
 
 class DashboardObject:
-    def __init__(self, activity_type='Activity', activity_name='Activity', url=''):
-        self.activity_type = activity_type
+    def __init__(self, activity_type_id='', activity_name='', url=''):
+        self.activity_type_id = activity_type_id
         self.activity_name = activity_name
         self.url = url
 
@@ -121,12 +131,12 @@ class DashboardObject:
         return {
             "id": self.url,
             "definition": {
-                "type": "http://adlnet.gov/expapi/activities/"+self.activity_type,
+                "type": self.activity_type_id,
                 "name": {
                     "en-US": self.activity_name
                 }
             },
-            "objectType": self.activity_type
+            "objectType": 'Activity'
         }
 
 # django.core.exceptions.ImproperlyConfigured: AUTH_USER_MODEL refers to model 'user.ReaderUser' that has not been installed

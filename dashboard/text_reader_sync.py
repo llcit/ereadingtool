@@ -22,11 +22,11 @@ def dashboard_synchronize_text_reading(text_reading, **kwargs):
 
         actor = DashboardActor(text_reading.student.user.first_name + " " + text_reading.student.user.last_name, text_reading.student.user.email,"Agent").to_dict()
         result = DashboardResultTextComplete(score, text_reading.state).to_dict()
-        verb = DashboardVerb(verb_type='completed', verb_name='Completed Quiz').to_dict()
+        verb = DashboardVerb(verb_type_id='http://adlnet.gov/expapi/verbs/completed', verb_name='Completed STAR Reading Quiz').to_dict()
         try:
             text_url = DASHBOARD_STAR_ENDPOINT + "/text/" + str(text_reading.text.id)
-            object = DashboardObject(activity_type='Activity', activity_name='Quiz', url=text_url).to_dict()
-            dashboard_data = DashboardData(actor, result, verb, object).to_dict()
+            dashboard_object = DashboardObject(activity_type_id='http://adlnet.gov/expapi/activities/Activity', activity_name='STAR Reading Quiz', url=text_url).to_dict()
+            dashboard_data = DashboardData(actor, result, verb, dashboard_object).to_dict()
 
             endpoint = DASHBOARD_ENDPOINT+'/statements?statementId='+dashboard_data['id']
             
@@ -38,7 +38,7 @@ def dashboard_synchronize_text_reading(text_reading, **kwargs):
             }
             
             requests.put(endpoint, headers=headers, data=json.dumps(dashboard_data))
-            print(endpoint, json.dumps(headers, indent=2), json.dumps(dashboard_data, indent=2))
+            #print(endpoint, json.dumps(headers, indent=2), json.dumps(dashboard_data, indent=2))
         except Exception as e:
             print(e)
             
