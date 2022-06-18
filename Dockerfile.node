@@ -19,18 +19,18 @@ RUN apt update -y \
     && npm install \
     && npm run build \
     && apt-get install -y nginx \
-    && mkdir -p /var/www/onkoali.org/html \
-    && chown -R $USER:$USER /var/www/onkoali.org/html \
+    && mkdir -p /var/www/stepstoadvancedreading.org/html \
+    && chown -R $USER:$USER /var/www/stepstoadvancedreading.org/html \
     && chmod -R 755 /var/www \
-    && cp -r dist/* /var/www/onkoali.org/html/
+    && cp -r dist/* /var/www/stepstoadvancedreading.org/html/
 
-COPY onkoali.org /etc/nginx/sites-available/
+COPY stepstoadvancedreading.org /etc/nginx/sites-available/
 
 # Overwrite the default nginx.conf to gzip more files. If nginx needs to be reloaded:
 # nginx -s reload
 COPY nginx.conf /etc/nginx/
 
-RUN ln -s /etc/nginx/sites-available/onkoali.org /etc/nginx/sites-enabled/ \
+RUN ln -s /etc/nginx/sites-available/stepstoadvancedreading.org /etc/nginx/sites-enabled/ \
     && rm /etc/nginx/sites-enabled/default
 
 CMD ["nginx", "-g", "daemon off;"]
