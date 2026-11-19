@@ -104,7 +104,7 @@ class Student(Profile, TextReadings, models.Model):
 
     def add_to_flashcards(self, text_phrase: TextPhrase, text_section: TextSection, instance: int):
         # call a dashboard function to make via a PUT on the LRS
-        dashboard_synchronize_my_words(self, text_phrase, text_section)
+        # dashboard_synchronize_my_words(self, text_phrase, text_section)
         flashcard, created = self.report_student_flashcards.get_or_create(student=self,
                                                                           phrase=text_phrase,
                                                                           text_section=text_section,
