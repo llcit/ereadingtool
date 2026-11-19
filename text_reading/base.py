@@ -238,9 +238,9 @@ class TextReading(models.Model):
 
         self.state = self.current_state.name
 
-        # Send the scores to Flagship connect
-        if not next_section:
-            dashboard_synchronize_text_reading(self)
+        # # Send the scores to Flagship connect
+        # if not next_section:
+        #     dashboard_synchronize_text_reading(self)
 
         self.save()
 
